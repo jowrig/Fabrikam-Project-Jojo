@@ -22,7 +22,34 @@ When you set up CI/CD via **Azure Portal > Deployment Center**, Azure automatica
 - `main_fabrikam-api-development-[suffix].yml` (API deployment)
 - `main_fabrikam-mcp-development-[suffix].yml` (MCP deployment)
 
-These workflows are **automatically configured** with:
+### ⚡ **Monorepo Fix Required**
+
+**Azure Portal generates workflows with automatic authentication setup, but they need adjustment for our monorepo structure.**
+
+**✅ Recommended Process:**
+1. **Let Azure generate workflows** in Deployment Center (preserves automatic secrets setup)
+2. **Run our fix script** to adjust for monorepo structure:
+   ```powershell
+   .\scripts\Fix-AzureWorkflows.ps1
+   ```
+
+**Why this approach:**
+- ✅ **Keep Azure's automatic secrets**: Service principals and authentication configured automatically
+- ✅ **Fix monorepo issues**: Script updates project paths for correct builds
+- ✅ **Workshop-friendly**: No manual GitHub secrets configuration required
+- ✅ **Best of both**: Azure's convenience + monorepo compatibility
+
+**What the script fixes:**
+- Updates `dotnet publish` commands to specify correct project paths
+- Ensures `dotnet build` uses the solution file  
+- Works automatically for both API and MCP services
+- Creates backups before making changes
+
+**📖 For complete details**: See [Azure Workflow Configuration Guide](../docs/deployment/AZURE-WORKFLOW-CONFIGURATION.md)
+
+**⚠️ Alternative**: Our pre-built templates (`.github/workflow-templates/`) require manual secret setup and are better for advanced scenarios.
+
+After fixing, these workflows provide:
 - ✅ Correct build paths for monorepo structure
 - ✅ Proper Azure credentials and service principal
 - ✅ Environment-specific deployment targets

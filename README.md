@@ -109,7 +109,8 @@ A comprehensive .NET-based business simulation platform designed for **Microsoft
 | Resource | Purpose | Status |
 |----------|---------|--------|
 | **[🚀 Deploy to Azure](docs/deployment/DEPLOY-TO-AZURE.md)** | One-click Azure deployment | ✅ Production Ready |
-| **[📚 Documentation Index](docs/DOCUMENTATION-INDEX.md)** | Complete documentation guide | ✅ Organized |
+| **[� Workflow Fix](docs/deployment/AZURE-WORKFLOW-CONFIGURATION.md)** | Auto-fix Azure workflows | ✅ Automated Script |
+| **[�📚 Documentation Index](docs/DOCUMENTATION-INDEX.md)** | Complete documentation guide | ✅ Organized |
 | **[🎉 Authentication Complete](docs/development/AUTHENTICATION-IMPLEMENTATION-COMPLETE.md)** | Implementation results | ✅ 100% Success |
 | **[🧪 Testing Guide](test.ps1)** | Automated testing | ✅ Local + Production |
 
