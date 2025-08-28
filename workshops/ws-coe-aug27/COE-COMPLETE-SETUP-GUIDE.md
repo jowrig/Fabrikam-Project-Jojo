@@ -212,6 +212,8 @@ Development/
 
 1. **Choose your development location** (e.g., `C:\Development` or `C:\Users\[YourName]\Documents\`)
 
+   > **💡 Pro Tip - Avoid Network Locations:** Synced folder locations, such as OneDrive, are viewed as network locations. For local development we recommend using a local, non-network folder because network locations can sometimes cause issues during builds. The nature of source control such as GitHub provides similar sync and backup benefits that you would get from OneDrive.
+
 2. **Open PowerShell** and navigate to your chosen location:
    ```powershell
    # Example: Navigate to your Documents folder
@@ -282,7 +284,8 @@ yourusername    https://github.com/yourusername/Fabrikam-Project (push)
    - For example: `rg-fabrikam-coe-imatest`
    - You should see it in your resource groups list
 
-3. **Get your User Object ID** (required for Key Vault permissions setup):
+3. **Get your User Object ID** (needed to grant you Key Vault access):
+   - **Why we need this**: The deployment creates an Azure Key Vault to securely store application secrets. Your User Object ID allows Azure to grant you permission to manage these secrets.
    - Open **Cloud Shell**: Click the terminal icon (`>_`) in the top toolbar
    - Choose **PowerShell** when prompted (recommended for consistency, if you want Bash it's fine)
    - Choose **No storage account required** (You can create one if you want, this is faster)
@@ -291,7 +294,7 @@ yourusername    https://github.com/yourusername/Fabrikam-Project (push)
      ```powershell
      az ad signed-in-user show --query id -o tsv
      ```
-   - **Copy the result** - you'll need this User Object ID for deployment
+   - **Copy the result** - this is your User Object ID that you'll enter in the ARM template deployment form
 
 ### 4.2 Deploy Using ARM Template
 

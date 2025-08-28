@@ -135,10 +135,10 @@
         "description": "SQL Server administrator password (only used when databaseProvider is SqlServer). Auto-generated if not provided."
       }
     },
-    "deploymentUser": {
+    "userObjectId": {
       "type": "string",
       "metadata": {
-        "description": "Object ID of the user deploying this template. This user will be granted Key Vault Secrets Officer permissions. Get this with: az ad signed-in-user show --query id -o tsv"
+        "description": "Your User Object ID - this grants you Key Vault access to manage secrets. Get this with: az ad signed-in-user show --query id -o tsv"
       }
     },
     "_artifactsLocation": {
@@ -343,8 +343,8 @@
           "entraExternalIdClientId": {
             "value": "[parameters('entraExternalIdClientId')]"
           },
-          "deploymentUser": {
-            "value": "[parameters('deploymentUser')]"
+          "userObjectId": {
+            "value": "[parameters('userObjectId')]"
           },
           "apiAppPrincipalId": {
             "value": "[reference('app-services').outputs.apiAppPrincipalId.value]"

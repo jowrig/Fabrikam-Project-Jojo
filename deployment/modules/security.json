@@ -38,7 +38,7 @@
     "entraExternalIdClientId": {
       "type": "string"
     },
-    "deploymentUser": {
+    "userObjectId": {
       "type": "string"
     },
     "apiAppPrincipalId": {
@@ -200,14 +200,14 @@
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2022-04-01",
-      "name": "[guid(parameters('resourceGroupId'), parameters('deploymentUser'), variables('keyVaultSecretsOfficerRoleId'))]",
+      "name": "[guid(parameters('resourceGroupId'), parameters('userObjectId'), variables('keyVaultSecretsOfficerRoleId'))]",
       "scope": "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]",
       "dependsOn": [
         "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
       ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('keyVaultSecretsOfficerRoleId'))]",
-        "principalId": "[parameters('deploymentUser')]",
+        "principalId": "[parameters('userObjectId')]",
         "principalType": "User"
       }
     }
