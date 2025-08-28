@@ -8,7 +8,7 @@
 
 **A comprehensive business simulation platform for AI demonstrations and real-world scenario training.**
 
-This project simulates **Fabrikam**, a fictional modular home builder, with realistic business operations that translate directly to customer scenarios. You'll build and deploy a complete business platform with AI integration in under 45 minutes.
+This project simulates **Fabrikam**, a fictional modular home builder, with realistic business operations that translate directly to customer scenarios. You'll build and deploy a complete business platform with AI integration in under 45 minutes
 
 ### 🎯 **Business Value Demonstration**
 
@@ -36,7 +36,68 @@ This fast, easy-to-deploy project showcases the business value of:
 - ⚡ **Real-time Data**: Live API connections for current business information
 - 🤖 **AI-Ready**: Optimized for Copilot Studio and other AI platforms
 
-### 📊 **Sample Business Data**
+### � **Understanding MCP (Model Context Protocol)**
+
+**What is MCP?** Think of MCP like a **USB-C port for AI applications**. Just as USB-C provides a standardized way to connect your devices to various peripherals and accessories, **MCP provides a standardized way to connect AI models to different data sources and tools**.
+
+#### **🎯 Why MCP Matters for Business**
+
+**Before MCP**: Each AI integration required custom development, proprietary APIs, and vendor lock-in.
+
+**With MCP**: A universal standard that lets you:
+- ✅ **Build once, use everywhere**: Your integrations work across different AI platforms
+- ✅ **Own your context**: Switch between AI applications while keeping your business logic
+- ✅ **Standardized development**: Use proven patterns instead of reinventing integration layers
+- ✅ **Future-proof investments**: Open protocol that evolves with the AI ecosystem
+
+#### **🛠️ Core MCP Capabilities**
+
+MCP servers provide three main types of functionality:
+
+1. **📄 Resources**: File-like data that can be read by AI clients
+   - *Example*: API responses, file contents, database queries
+   - *In Fabrikam*: Customer data, order summaries, product catalogs
+
+2. **🔧 Tools**: Functions that can be called by the LLM (with user approval)
+   - *Example*: Execute actions, perform calculations, trigger workflows
+   - *In Fabrikam*: "Get sales analytics", "Check inventory", "Find customer orders"
+
+3. **💬 Prompts**: Pre-written templates that help users accomplish specific tasks
+   - *Example*: Business intelligence queries, report generation, customer service scripts
+   - *In Fabrikam*: "Analyze Q3 sales performance", "Generate customer summary"
+
+#### **🏗️ How FabrikamMcp Demonstrates MCP**
+
+Our FabrikamMcp service showcases **Tools** - the most powerful MCP capability:
+
+```
+🔄 Business Flow Example:
+User: "What were our sales last month?"
+↓
+Copilot Studio → MCP Server → FabrikamApi → Database
+↓
+Real business data returned through standardized protocol
+↓
+AI formats response: "Last month you generated $67,340 in revenue..."
+```
+
+**Key Benefits You'll See:**
+- 🚀 **No custom AI integration code** - MCP handles the complexity
+- 🔄 **Real-time data** - Always current business information
+- 🎯 **Business-focused tools** - Operations teams can query data naturally
+- 📈 **Scalable pattern** - Add new tools without changing AI configuration
+
+#### **🎪 What You'll Experience Today**
+
+During this workshop, you'll see MCP in action:
+1. **Deploy the MCP server** alongside your business API
+2. **Connect Copilot Studio** to your MCP server using the standard protocol
+3. **Test business intelligence tools** through natural language
+4. **Query real data** from your deployed Fabrikam business system
+
+**The Magic**: You'll ask questions like "Which customer has the most orders?" and get real answers from your live business data - all through the MCP standard protocol.
+
+### �📊 **Sample Business Data**
 - **8 Customers**: Business and individual buyers across regions
 - **45+ Products**: Modular homes, ADUs, materials with full specifications  
 - **15 Orders**: $829,482.50 in sample revenue with regional breakdowns
