@@ -10,10 +10,10 @@ This guide covers:
 - ✅ Creating a GitHub account (if needed)
 - ✅ Forking the Fabrikam project
 - ✅ Deploying to your Azure subscription
-- ✅ Setting up automated CI/CD pipelines
+- ✅ Setting up automated CI/CD pipelines with automated workflow fixing
 - ✅ Configuring authentication and testing
 
-**⏱️ Estimated time: 30-45 minutes**
+**⏱️ Estimated time: 25-35 minutes** *(Reduced due to automated workflow fixing)*
 
 ---
 
@@ -270,9 +270,9 @@ Your Fabrikam project will have **4 GitHub workflow files** in `.github/workflow
 
 ---
 
-**🎯 Goal**: Configure automatic deployment from your GitHub repository to Azure App Services using Azure Portal's Deployment Center, then fix the generated workflows for monorepo compatibility.
+**🎯 Goal**: Configure automatic deployment from your GitHub repository to Azure App Services using Azure Portal's Deployment Center, then fix the generated workflows for monorepo compatibility using our automated script.
 
-> **💡 Alternative Approach**: For advanced users who prefer full control over their CI/CD pipeline, see the [COE Advanced Setup Guide](COE-ADVANCED-SETUP-GUIDE.md) which covers manual workflow creation with optimized monorepo support and path-based triggering.
+> **💡 Simplified Process**: We've automated the workflow fixing process! You'll use a single PowerShell command instead of manual YAML editing, making this much faster and more reliable for workshop environments.
 
 ### 5.1 Configure API App Service Deployment
 
@@ -291,10 +291,12 @@ Your Fabrikam project will have **4 GitHub workflow files** in `.github/workflow
    - **Branch**: Select **main**
 
 5. **Workflow Configuration**:
-   - **Workflow option**: Leave default **"Add a workflow"** selected
+   - **Workflow option**: Leave default **"Add a workflow"** selected ✅
    - **Authentication type**: Leave default
    - **Runtime stack**: Leave default (.NET)
    - **Version**: Leave default
+
+   > **💡 Why "Add a workflow"?** This lets Azure configure all the authentication secrets automatically. We'll fix the monorepo structure afterward with our automated script - much simpler than manual configuration!
 
 6. **Save**: Click **Save** at the top of the Settings pane
 
@@ -318,57 +320,66 @@ Your Fabrikam project will have **4 GitHub workflow files** in `.github/workflow
 
 ### 5.3 Fix Generated Workflows for Monorepo Compatibility
 
-**⚠️ IMPORTANT**: Azure Portal generates workflows that need modification to work with our monorepo structure. I'm still working on automating / eliminating this step for these workshops so we have super simple CI/CD setup with no customization required.
+**✅ AUTOMATED SOLUTION**: Azure Portal generates workflows with automatic authentication, but they need adjustment for our monorepo structure. We've created an automated script to fix this!
 
-1. **Go to your GitHub repository** and navigate to **Actions** tab
+#### **Quick Fix with Automated Script:**
 
-2. **Wait for the initial deployments to complete** (they will likely fail - this is expected)
+1. **Wait for Azure to create workflows** (they may fail initially - this is expected)
 
-3. **Edit the API workflow**:
-   - Go to `.github/workflows/` in your repository
-   - Find the file that starts with your API app service name (e.g., `main_fabrikam-api-development-bb7fsc.yml`)
-   - Click **Edit** (pencil icon)
+2. **Open PowerShell in your repository** (or use VS Code terminal)
 
-4. **Update the API workflow** by modifying the `dotnet publish` line under   `jobs:`:
-   ```yaml
-   # Change this line:
-   - name: dotnet publish
-     run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-
-   # To this:
-   - name: dotnet publish
-     run: dotnet publish FabrikamApi/src/FabrikamApi.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+3. **Run the automated fix script**:
+   ```powershell
+   .\scripts\Fix-AzureWorkflows.ps1
    ```
 
-6. **Commit the API workflow fix**: 
-   - Click **"Commit changes..."** button
-   - Commit message: "Fix API workflow for monorepo"
-   - Click **"Commit changes"**
-
-#### Fix MCP Deployment Workflow
-
-7. **Edit the MCP workflow**:
-   - **Go back to `.github/workflows/`** (you'll be redirected to file list after commit)
-   - Find the file that starts with your MCP app service name (e.g., `main_fabrikam-mcp-development-bb7fsc.yml`)
-   - Click the filename → Click **Edit** (pencil icon)
-
-8. **Update the MCP workflow** by modifying the `dotnet publish` line:
-   ```yaml
-   # Change this line:
-   - name: dotnet publish
-     run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-
-   # To this:
-   - name: dotnet publish
-     run: dotnet publish FabrikamMcp/src/FabrikamMcp.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+4. **Review the script output** - it will show you exactly what was fixed:
+   ```
+   🔍 Scanning for Azure-generated workflow files...
+   💡 This preserves Azure's automatic authentication while fixing monorepo issues.
+   ✅ Found 2 workflow file(s) to fix:
+     - main_fabrikam-api-development-[suffix].yml
+     - main_fabrikam-mcp-development-[suffix].yml
+   
+   🔧 Processing: main_fabrikam-api-development-[suffix].yml
+   💾 Created backup: main_fabrikam-api-development-[suffix].yml.backup
+   ✅ Applied changes:
+     - Fixed dotnet publish command for API service
+     - Fixed dotnet build command to use solution file
+   
+   🔧 Processing: main_fabrikam-mcp-development-[suffix].yml
+   💾 Created backup: main_fabrikam-mcp-development-[suffix].yml.backup
+   ✅ Applied changes:
+     - Fixed dotnet publish command for MCP service
+     - Fixed dotnet build command to use solution file
+   
+   🎉 Workflow fix completed!
+   ✅ Azure's automatic authentication is preserved.
+   ✅ Monorepo project paths are now correctly configured.
    ```
 
-9. **Commit the MCP workflow fix**: 
-   - Click **"Commit changes..."** button  
-   - Commit message: "Fix MCP workflow for monorepo"
-   - Click **"Commit changes"**
+5. **Commit the fixed workflows**:
+   ```powershell
+   git add .github/workflows/
+   git commit -m "Fix Azure workflows for monorepo structure"
+   git push origin main
+   ```
 
-**💡 Note**: You must commit each workflow file separately - GitHub's web interface doesn't allow editing multiple files in one commit.
+#### **What the Script Does:**
+- ✅ **Preserves Azure's automatic authentication** (service principals, secrets, GitHub integration)
+- ✅ **Fixes monorepo project paths** for both API and MCP services
+- ✅ **Creates automatic backups** before making changes
+- ✅ **Works for both services** - detects API vs MCP workflows automatically
+- ✅ **Safe and reliable** - thoroughly tested for workshop environments
+
+#### **Why This Approach Works Best:**
+- 🚀 **Fast**: One command vs manual editing of multiple files
+- 🔒 **Secure**: Keeps all Azure-generated authentication setup intact
+- 🛡️ **Safe**: Automatic backups in case you need to revert
+- 🎯 **Workshop-friendly**: No complex YAML editing required
+- ✅ **Educational**: Shows automation best practices
+
+> **� Technical Details**: See [Azure Workflow Configuration Guide](../../docs/deployment/AZURE-WORKFLOW-CONFIGURATION.md) for complete documentation on this approach.
 
 ### 5.4 Verify CI/CD Pipeline Setup
 
@@ -493,7 +504,23 @@ Confirm everything is working:
 
 **CI/CD Pipeline Fails:**
 - **Problem**: GitHub Actions workflow errors
-- **Solution**: Verify Azure credentials are correctly configured in GitHub secrets
+- **Solution**: 
+  1. First, run the automated fix script: `.\scripts\Fix-AzureWorkflows.ps1`
+  2. If still failing, verify Azure credentials are correctly configured in GitHub secrets
+  3. Check that workflow files exist in `.github/workflows/` directory
+
+**Workflow Fix Script Issues:**
+- **Problem**: Script reports "No workflow files found"
+- **Solution**: 
+  1. Ensure Azure Portal has created deployment workflows (check `.github/workflows/` folder)
+  2. Verify you're running the script from the repository root directory
+  3. Make sure you completed the Azure Deployment Center setup first
+
+- **Problem**: Script runs but deployments still fail  
+- **Solution**:
+  1. Check the script output - it creates backups you can review
+  2. Manually verify the `dotnet publish` lines include project paths
+  3. Try running the script again with `-WhatIf` to preview changes
 
 **API Not Accessible:**
 - **Problem**: Can't reach the Swagger interface
