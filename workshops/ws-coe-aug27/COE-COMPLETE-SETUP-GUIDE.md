@@ -9,6 +9,7 @@ This guide covers:
 - ✅ Initial Azure/Microsoft 365 login and MFA setup
 - ✅ Creating a GitHub account (if needed)
 - ✅ Forking the Fabrikam project
+- ✅ Cloning your fork for local development (optional)
 - ✅ Deploying to your Azure subscription
 - ✅ Setting up automated CI/CD pipelines with automated workflow fixing
 - ✅ Configuring authentication and testing
@@ -178,6 +179,94 @@ You now have your own copy at: `https://github.com/[your-username]/Fabrikam-Proj
 
 ---
 
+## 💻 Step 3.5: Clone Your Fork (Optional - For Local Development)
+
+**🎯 Goal**: Get a local copy of your forked repository on your computer to run scripts and work with the code locally.
+
+> **💡 When do you need this?** You'll need to clone your repository if you want to:
+> - Run the automated workflow fixing script (`.\scripts\Fix-AzureWorkflows.ps1`)
+> - Make code changes locally using VS Code or other editors
+> - Test the application on your local machine
+> - Use PowerShell scripts for testing and validation
+
+### 3.5.1 Understanding Git Repositories
+
+**💡 What's a repository?** A Git repository is a special `.git/` folder that tracks all changes made to files in a project. Think of it as a complete history of your project that you can sync between GitHub (online) and your computer (local).
+
+### 3.5.2 Prerequisites for Cloning
+
+**Before cloning, ensure you have:**
+- [ ] Git installed on your computer ([Download Git](https://git-scm.com/downloads))
+- [ ] PowerShell or Command Prompt access
+- [ ] Your fork URL ready (something like: `https://github.com/yourusername/Fabrikam-Project`)
+
+### 3.5.3 Cloning Your Fork
+
+**Recommended folder structure:**
+```
+Development/
+└── Fabrikam-Project/    ← Your cloned repository will be here
+```
+
+**Step-by-step cloning process:**
+
+1. **Choose your development location** (e.g., `C:\Development` or `C:\Users\[YourName]\Documents\`)
+
+2. **Open PowerShell** and navigate to your chosen location:
+   ```powershell
+   # Example: Navigate to your Documents folder
+   cd "C:\Users\$env:USERNAME\Documents"
+   
+   # Or navigate to a Development folder
+   cd "C:\Development"
+   ```
+
+3. **Clone your forked repository**:
+   ```powershell
+   # Replace 'yourusername' with your actual GitHub username
+   git clone https://github.com/yourusername/Fabrikam-Project --origin yourusername
+   ```
+
+4. **Navigate into the cloned repository**:
+   ```powershell
+   cd Fabrikam-Project
+   ```
+
+5. **Verify the clone was successful**:
+   ```powershell
+   # List the contents - you should see all the project files
+   dir
+   
+   # Check your git remotes
+   git remote -v
+   ```
+
+### 3.5.4 Understanding Git Remotes
+
+**📝 Info**: When you clone a git repository, you automatically get a "remote" - this is a pointer (URL) to the online copy of your repository. 
+
+- **Default behavior**: Git would normally call this remote `origin`
+- **Our approach**: We use `--origin yourusername` to make it clearer which fork you're working with
+- **Why this helps**: If you later add the original repository as another remote, you'll easily distinguish between your fork and the original
+
+**Example of what you'll see:**
+```
+yourusername    https://github.com/yourusername/Fabrikam-Project (fetch)
+yourusername    https://github.com/yourusername/Fabrikam-Project (push)
+```
+
+### 3.5.5 Next Steps After Cloning
+
+**Now you can:**
+- ✅ Run the automated workflow script: `.\scripts\Fix-AzureWorkflows.ps1`
+- ✅ Open the project in VS Code: `code .`
+- ✅ Run local testing scripts: `.\test.ps1 -Quick`
+- ✅ Make code changes and commit them back to your fork
+
+> **💡 Tip**: Keep PowerShell open in your project directory - you'll use it for running scripts during the workshop!
+
+---
+
 ## ☁️ Step 4: Deploy to Azure
 
 **🎯 Goal**: Deploy the Fabrikam application to your Azure subscription with proper resource naming.
@@ -326,12 +415,16 @@ Your Fabrikam project will have **4 GitHub workflow files** in `.github/workflow
 
 1. **Wait for Azure to create workflows** (they may fail initially - this is expected)
 
-2. **Open PowerShell in your repository** (or use VS Code terminal)
+2. **Ensure you have a local copy of your repository**:
+   - If you haven't cloned your fork yet, see [Step 3.5: Clone Your Fork](#-step-35-clone-your-fork-optional---for-local-development)
+   - Open PowerShell/Terminal in your cloned repository folder
 
 3. **Run the automated fix script**:
    ```powershell
    .\scripts\Fix-AzureWorkflows.ps1
    ```
+
+   > **💡 Alternative**: If you prefer not to clone locally, you can still do this manually through GitHub's web interface, but the script is much faster and more reliable.
 
 4. **Review the script output** - it will show you exactly what was fixed:
    ```
@@ -512,9 +605,16 @@ Confirm everything is working:
 **Workflow Fix Script Issues:**
 - **Problem**: Script reports "No workflow files found"
 - **Solution**: 
-  1. Ensure Azure Portal has created deployment workflows (check `.github/workflows/` folder)
-  2. Verify you're running the script from the repository root directory
-  3. Make sure you completed the Azure Deployment Center setup first
+  1. Ensure Azure Portal has created deployment workflows (check `.github/workflows/` folder on GitHub)
+  2. Make sure you have cloned your fork locally (see Step 3.5 if needed)
+  3. Verify you're running the script from the repository root directory
+  4. Confirm you completed the Azure Deployment Center setup first
+
+- **Problem**: "Can't find the script file"
+- **Solution**:
+  1. Ensure you cloned your fork to your local machine (Step 3.5)
+  2. Navigate to the correct directory: `cd Fabrikam-Project`
+  3. Verify the script exists: `dir scripts\Fix-AzureWorkflows.ps1`
 
 - **Problem**: Script runs but deployments still fail  
 - **Solution**:
