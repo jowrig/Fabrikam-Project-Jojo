@@ -76,6 +76,8 @@ During demonstrations, you'll experience MCP's business value:
 
 **The Magic**: You maintain one MCP integration, but it works across all AI platforms. As new AI technologies emerge, your business logic travels with you.
 
+> **📖 Learn More**: For complete technical documentation, see the [official MCP specification](https://modelcontextprotocol.io/) from Anthropic.
+
 ## 🔐 Authentication System RULES** ⚠️  
 > **ALWAYS use VS Code tasks for servers**: `run_task(id: "🌐 Start Both Servers")`  
 > **NEVER use run_in_terminal for servers**: `dotnet run` commands break server management  

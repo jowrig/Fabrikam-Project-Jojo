@@ -1,6 +1,10 @@
 # 📋 COE Demo Documentation Index
 
-**Welcome to the COE Fabrikam Project Demo! Start here for your complete setup journey.**
+**Welcome to the COE Fabrikam Project Demo! Start here for y**The Magic**: You'll ask questions like "Which customer has the most orders?" and get real answers from your live business data - all through the MCP standard protocol.
+
+> **📖 Learn More**: For complete technical documentation, see the [official MCP specification](https://modelcontextprotocol.io/) from Anthropic.
+
+### 📊 **Sample Business Data** complete setup journey.**
 
 ---
 
