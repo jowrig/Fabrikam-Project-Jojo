@@ -2,8 +2,6 @@
 
 **Welcome to the COE Fabrikam Project Demo! Start here for y**The Magic**: You'll ask questions like "Which customer has the most orders?" and get real answers from your live business data - all through the MCP standard protocol.
 
-> **📖 Learn More**: For complete technical documentation, see the [official MCP specification](https://modelcontextprotocol.io/) from Anthropic.
-
 ### 📊 **Sample Business Data** complete setup journey.**
 
 ---
@@ -43,6 +41,8 @@ This fast, easy-to-deploy project showcases the business value of:
 ### � **Understanding MCP (Model Context Protocol)**
 
 **What is MCP?** Think of MCP like a **USB-C port for AI applications**. Just as USB-C provides a standardized way to connect your devices to various peripherals and accessories, **MCP provides a standardized way to connect AI models to different data sources and tools**.
+
+> **📖 Learn More**: For complete technical documentation, see the [official MCP specification](https://modelcontextprotocol.io/) from Anthropic.
 
 #### **🎯 Why MCP Matters for Business**
 

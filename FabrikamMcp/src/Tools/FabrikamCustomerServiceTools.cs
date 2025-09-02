@@ -13,8 +13,9 @@ public class FabrikamCustomerServiceTools : AuthenticatedMcpToolBase
         HttpClient httpClient, 
         IConfiguration configuration,
         IAuthenticationService authService,
-        ILogger<FabrikamCustomerServiceTools> logger) 
-        : base(httpClient, configuration, authService, logger)
+        ILogger<FabrikamCustomerServiceTools> logger,
+        IHttpContextAccessor httpContextAccessor) 
+        : base(httpClient, configuration, authService, logger, httpContextAccessor)
     {
     }
 

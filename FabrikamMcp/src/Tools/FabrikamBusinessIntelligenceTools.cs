@@ -9,8 +9,13 @@ namespace FabrikamMcp.Tools;
 [McpServerToolType]
 public class FabrikamBusinessIntelligenceTools : AuthenticatedMcpToolBase
 {
-    public FabrikamBusinessIntelligenceTools(HttpClient httpClient, IConfiguration configuration, IAuthenticationService authenticationService, ILogger<FabrikamBusinessIntelligenceTools> logger)
-        : base(httpClient, configuration, authenticationService, logger)
+    public FabrikamBusinessIntelligenceTools(
+        HttpClient httpClient, 
+        IConfiguration configuration, 
+        IAuthenticationService authenticationService, 
+        ILogger<FabrikamBusinessIntelligenceTools> logger,
+        IHttpContextAccessor httpContextAccessor)
+        : base(httpClient, configuration, authenticationService, logger, httpContextAccessor)
     {
     }
 
@@ -299,9 +304,9 @@ public class FabrikamBusinessIntelligenceTools : AuthenticatedMcpToolBase
             var baseUrl = _configuration["FabrikamApi:BaseUrl"] ?? "https://fabrikam-api-dev.levelupcsp.com";
 
             // Fetch current data to analyze for alerts
-            var productsTask = _httpClient.GetAsync($"{baseUrl}/api/products?pageSize=1000");
-            var ordersTask = _httpClient.GetAsync($"{baseUrl}/api/orders?status=Pending&pageSize=100");
-            var urgentTicketsTask = _httpClient.GetAsync($"{baseUrl}/api/supporttickets?urgent=true&pageSize=100");
+            var productsTask = SendAuthenticatedRequest($"{baseUrl}/api/products?pageSize=1000");
+            var ordersTask = SendAuthenticatedRequest($"{baseUrl}/api/orders?status=Pending&pageSize=100");
+            var urgentTicketsTask = SendAuthenticatedRequest($"{baseUrl}/api/supporttickets?urgent=true&pageSize=100");
 
             await Task.WhenAll(productsTask, ordersTask, urgentTicketsTask);
 

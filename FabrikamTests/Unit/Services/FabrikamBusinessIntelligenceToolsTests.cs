@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using Moq.Protected;
 using System.Net;
@@ -18,6 +19,7 @@ public class FabrikamBusinessIntelligenceToolsTests
     private readonly Mock<HttpMessageHandler> _httpMessageHandlerMock;
     private readonly Mock<IAuthenticationService> _authServiceMock;
     private readonly Mock<ILogger<FabrikamBusinessIntelligenceTools>> _loggerMock;
+    private readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;
     private readonly HttpClient _httpClient;
 
     public FabrikamBusinessIntelligenceToolsTests()
@@ -26,6 +28,7 @@ public class FabrikamBusinessIntelligenceToolsTests
         _httpMessageHandlerMock = new Mock<HttpMessageHandler>();
         _authServiceMock = new Mock<IAuthenticationService>();
         _loggerMock = new Mock<ILogger<FabrikamBusinessIntelligenceTools>>();
+        _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
 
         _httpClient = new HttpClient(_httpMessageHandlerMock.Object);
         
@@ -37,7 +40,7 @@ public class FabrikamBusinessIntelligenceToolsTests
 
     private FabrikamBusinessIntelligenceTools CreateBusinessTools()
     {
-        return new FabrikamBusinessIntelligenceTools(_httpClient, _configurationMock.Object, _authServiceMock.Object, _loggerMock.Object);
+        return new FabrikamBusinessIntelligenceTools(_httpClient, _configurationMock.Object, _authServiceMock.Object, _loggerMock.Object, _httpContextAccessorMock.Object);
     }
 
     [Theory]
