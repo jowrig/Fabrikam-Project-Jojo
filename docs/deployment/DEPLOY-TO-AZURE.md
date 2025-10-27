@@ -19,7 +19,7 @@ $suffix = -join ((97..122) | Get-Random -Count 6 | ForEach-Object {[char]$_})
 
 # Create resource group
 $resourceGroupName = "rg-fabrikam-development-$suffix"
-az group create --name $resourceGroupName --location "East US 2"
+az group create --name $resourceGroupName --location "West US 2"
 
 # Get your user object ID (needed for Key Vault RBAC permissions)
 $userObjectId = az ad signed-in-user show --query id -o tsv
